@@ -36,9 +36,10 @@ async function main() {
     let browser;
     try {
         const browser = await puppeteer.launch({
-            executablePath: '/usr/bin/chromium', // location where apt installs chromium
+            executablePath: process.env.NODE_ENV === "production" ? process.env.PUPPETEER_EXECUTABLE_PATH // location where apt installs chromium
+                : puppeteer.executablePath(), // location where apt installs chromium
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--single-process', '--no-zygote'],
         });
         const page = await browser.newPage();
 
