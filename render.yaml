@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: cdc-notification
+    env: node
+    plan: free
+    buildCommand: |
+      apt-get update
+      apt-get install -y chromium
+      npm install
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+        value: "true"
+      - key: NODE_ENV
+        value: production
+    buildFilter:
+      paths:
+        - package.json
+        - erp_login_deploy.js
